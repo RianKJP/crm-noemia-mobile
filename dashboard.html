@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>CRM Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2 class="logo">CRM</h2>
+
+    <nav>
+      <a href="../dashboard.html" class="active">Visão Geral</a>
+      <a href="pages/products.html">Produtos</a>
+      <a href="pages/competitors.html">Concorrentes</a>
+      <a href="pages/sales.html">Vendas</a>
+      <a href="pages/expenses.html">Despesas</a>
+      <a href="pages/utils.html">Util</a>
+    </nav>
+
+    <button class="logout">Sair</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="content">
+
+    <!-- HEADER -->
+    <header class="header">
+      <h1>Visão Geral</h1>
+      <span class="user">Olá, Usuário</span>
+    </header>
+
+    <!-- CARDS -->
+    <section class="cards">
+      <div class="card">
+        <h3>Faturamento</h3>
+        <p id="revenue">R$ 0,00</p>
+      </div>
+
+      <div class="card">
+        <h3>Despesas</h3>
+        <p id="expenses">R$ 0,00</p>
+      </div>
+
+      <div class="card">
+        <h3>Lucro</h3>
+        <p id="profit">R$ 0,00</p>
+      </div>
+
+      <div class="card">
+        <h3>Produto + Vendido</h3>
+        <p id="top-product">---</p>
+      </div>
+    </section>
+
+    <!-- TABELA -->
+    <section class="table-section">
+      <div class="table-header">
+        <h2>Últimas Vendas</h2>
+        <button class="btn-primary">Nova Venda</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Produto A</td>
+            <td>2</td>
+            <td>R$ 200</td>
+            <td><span class="status success">Concluída</span></td>
+            <td>10/01/2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</div>
+
+</body>
+</html>
+<script>
+  async function checkAuth() {
+    const { data } = await window.supabaseClient.auth.getUser();
+
+    if (!data.user) {
+      window.location.href = "index.html";
+    }
+  }
+
+  checkAuth();
+</script>

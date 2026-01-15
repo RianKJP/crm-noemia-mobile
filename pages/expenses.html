@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Despesas</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h2 class="logo">CRM</h2>
+            <nav>
+                <a href="../dashboard.html">Visão Geral</a>
+                <a href="products.html">Produtos</a>
+                <a href="competitors.html">Concorrentes</a>
+                <a href="sales.html">Vendas</a>
+                <a href="expenses.html" class="active">Despesas</a>
+                <a href="utils.html">Util</a>
+            </nav>
+            <button class="logout" onclick="logout()">Sair</button>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content">
+
+            <header class="header">
+                <h1>Despesas</h1>
+                <button onclick="openModal()">Nova Despesa</button>
+            </header>
+
+            <section class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Valor</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="despesasTable"></tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="modal" style="display:none">
+        <div>
+            <h3 id="modalTitle"></h3>
+
+            <input id="name" placeholder="Nome da despesa">
+            <input id="value" type="number" step="0.01" placeholder="Valor">
+            <input id="date" type="date">
+
+            <button onclick="saveDespesa()">Salvar</button>
+            <button onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/products.js"></script>
+
+</body>
+
+</html>

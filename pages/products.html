@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Produtos</title>
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <h2 class="logo">CRM</h2>
+      <nav>
+        <a href="../dashboard.html">Visão Geral</a>
+        <a href="products.html" class="active">Produtos</a>
+        <a href="competitors.html">Concorrentes</a>
+        <a href="sales.html">Vendas</a>
+        <a href="expenses.html">Despesas</a>
+        <a href="utils.html">Util</a>
+      </nav>
+      <button class="logout" onclick="logout()">Sair</button>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <header class="header">
+        <h1>Produtos</h1>
+        <button class="btn-primary" onclick="openModal()">Novo Produto</button>
+      </header>
+
+      <section class="table-section">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Novo Produto</h2>
+
+      <input id="nome" placeholder="Nome do produto">
+      <input id="categoria" placeholder="Categoria">
+      <input id="preco" type="number" placeholder="Preço">
+      <select id="status">
+        <option value="ativo">Ativo</option>
+        <option value="inativo">Inativo</option>
+      </select>
+
+
+      <div class="modal-actions">
+        <button onclick="saveProduct()" class="btn-primary">Salvar</button>
+        <button onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/expenses.js"></script>
+
+</body>
+
+</html>
