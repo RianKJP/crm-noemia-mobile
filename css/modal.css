@@ -1,0 +1,148 @@
+/* MODAL BACKDROP */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+/* MODAL BOX */
+.modal-content {
+  background: #ffffff;
+  width: 420px;
+  max-width: 92%;
+  padding: 32px;
+  border-radius: 16px;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15);
+
+  animation: modalFade 0.3s ease;
+}
+
+/* TÍTULO (se tiver h2/h3 no modal) */
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* INPUTS & SELECT */
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+
+  font-size: 14px;
+  color: #111827;
+
+  transition: all 0.25s ease;
+}
+
+/* FOCO NOS INPUTS */
+.modal-content input:focus,
+.modal-content select:focus {
+  outline: none;
+  border-color: var(--blue-secondary);
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(70, 88, 248, 0.15);
+}
+
+/* PLACEHOLDER */
+.modal-content input::placeholder {
+  color: #9ca3af;
+}
+
+/* AÇÕES */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* BOTÃO PRINCIPAL */
+.btn-primary {
+  background: var(--blue-secondary);
+  color: #fff;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  box-shadow: 0 8px 18px #C5A46D;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px #7B5E3B;
+}
+
+/* BOTÃO SECUNDÁRIO (se tiver cancelar) */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  padding: 12px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: #f3f4f6;
+}
+/* AGRUPAMENTO */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+/* LABEL */
+.field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* LINHA DUPLA */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* AJUSTE DO TÍTULO */
+.modal-content h2 {
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+
+/* ANIMAÇÃO */
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

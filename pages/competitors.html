@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Concorrentes</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/variable.css">
+  <link rel="stylesheet" href="../css/modal.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+  <div class="app">
+
+ <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="title-crm">
+        <div class="title-icon">
+          <h2 class="logo">CRM Noémia</h2>
+          <button class="toggle-sidebar" onclick="toggleSidebar()">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+        <hr>
+      </div>
+
+      <nav>
+        <a href="../dashboard.html">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Visão Geral</span>
+        </a>
+
+        <a href="products.html">
+          <i data-lucide="package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a class="active" href="competitors.html">
+          <i data-lucide="users"></i>
+          <span>Concorrentes</span>
+        </a>
+
+        <a href="sales.html">
+          <i data-lucide="shopping-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a href="expenses.html">
+          <i data-lucide="wallet"></i>
+          <span>Despesas</span>
+        </a>
+
+        <a href="utils.html">
+          <i data-lucide="settings"></i>
+          <span>Util</span>
+        </a>
+      </nav>
+
+
+      <button class="logout">
+        <i data-lucide="log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <header class="header">
+        <h1>Concorrentes</h1>
+        <button class="btn-primary" onclick="openModal()">Novo Concorrente</button>
+      </header>
+
+      <section class="table-section">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Produto</th>
+              <th>Preço</th>
+              <th>Observações</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="competitorsTable"></tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Novo Concorrente</h2>
+
+      <input id="nome" placeholder="Nome do concorrente">
+      <div class="field">
+        <label for="produto">produto</label>
+        <select id="produto">
+          <option value="alto">Ticket alto</option>
+          <option value="medio">Ticket médio</option>
+          <option value="baixo">Ticket baixo</option>
+        </select>
+      </div>
+      <input id="preco" type="number" step="0.01" placeholder="Preço">
+
+      <div class="modal-actions">
+        <button onclick="saveCompetitor()" class="btn-primary">Salvar</button>
+        <button onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+  <script src="../js/competitors.js"></script>
+ <script src="../js/logout.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+:root {
+  --background: #0D1322;
+  --fundo-branco: #F6FFFC;
+  --color-text-dark: #2E2E2E;
+  --color-text-light: #000000;
+  --color-accent-brown: #7B5E3B;
+  --color-accent-gold: #C5A46D;
+
+
+  --blue-primary: #0D1322;
+  
+  --blue-secondary: #C5A46D;
+  --blue-soft: #eff6ff;
+
+  --bg-app: #f5f7fb;
+  --bg-card: #ffffff;
+
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+}

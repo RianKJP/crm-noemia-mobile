@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Produtos</title>
+  <title>Util</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/variable.css">
   <link rel="stylesheet" href="../css/modal.css">
@@ -15,7 +15,7 @@
 
   <div class="app">
 
-    <!-- SIDEBAR -->
+ <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="title-crm">
         <div class="title-icon">
@@ -33,7 +33,7 @@
           <span>Visão Geral</span>
         </a>
 
-        <a class="active" href="products.html">
+        <a href="pages/products.html">
           <i data-lucide="package"></i>
           <span>Produtos</span>
         </a>
@@ -53,7 +53,7 @@
           <span>Despesas</span>
         </a>
 
-        <a href="utils.html">
+        <a class="active" href="utils.html">
           <i data-lucide="settings"></i>
           <span>Util</span>
         </a>
@@ -71,8 +71,8 @@
     <main class="content">
 
       <header class="header">
-        <h1>Produtos</h1>
-        <button class="btn-primary" onclick="openModal()">Novo Produto</button>
+        <h1>Util</h1>
+        <button class="btn-primary" onclick="openModal()">Novo Item</button>
       </header>
 
       <section class="table-section">
@@ -80,12 +80,13 @@
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Preço</th>
-              <th>Status</th>
+              <th>Tipo</th>
+              <th>Valor</th>
+              <th>Observações</th>
               <th>Ações</th>
             </tr>
           </thead>
-          <tbody id="productsTable"></tbody>
+          <tbody id="utilsTable"></tbody>
         </table>
       </section>
 
@@ -95,62 +96,24 @@
   <!-- MODAL -->
   <div class="modal" id="modal">
     <div class="modal-content">
+      <h2 id="modalTitle">Novo Item</h2>
 
-      <h2 id="modalTitle">Adicionar Produto</h2>
+      <input id="nome" placeholder="Nome">
+      <input id="tipo" placeholder="Tipo (ex: ferramenta, serviço)">
+      <input id="valor" type="number" step="0.01" placeholder="Valor (opcional)">
+      <textarea id="observacoes" placeholder="Observações"></textarea>
 
-      <div class="field">
-        <label for="nome">Nome</label>
-        <input id="nome" placeholder="Nome do produto">
-      </div>
-
-      <div class="field-row">
-        <div class="field">
-          <label for="preco">Preço</label>
-          <input id="preco" type="number" placeholder="0">
-        </div>
-
-        <div class="field">
-          <label for="custo">Custo</label>
-          <input id="custo" type="number" placeholder="0">
-        </div>
-      </div>
-      <div class="field">
-        <label for="link">Website</label>
-        <input id="link" placeholder="https://">
-      </div>
-
-      <div class="field">
-        <label for="ticket">Ticket</label>
-        <select id="ticket">
-          <option value="alto">Ticket alto</option>
-          <option value="medio">Ticket médio</option>
-          <option value="baixo">Ticket baixo</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="status">Status</label>
-        <select id="status">
-          <option value="ativo">Ativo</option>
-          <option value="inativo">Inativo</option>
-        </select>
-      </div>
       <div class="modal-actions">
-        <button class="btn-secondary" onclick="closeModal()">Cancelar</button> 
-        <button class="btn-primary"
-          onclick="saveProduct()">Criar</button>
+        <button onclick="saveUtil()" class="btn-primary">Salvar</button>
+        <button onclick="closeModal()">Cancelar</button>
       </div>
     </div>
-
-
-  </div>
   </div>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../js/supabase.js"></script>
-  <script src="../js/products.js"></script>
+  <script src="../js/utils.js"></script>
   <script src="../js/logout.js"></script>
 
 </body>
-
 </html>

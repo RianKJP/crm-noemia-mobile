@@ -11,17 +11,20 @@ async function getUser() {
 
   return data.user;
 }
-
+function toggleSidebar() {
+  document.querySelector(".sidebar").classList.toggle("collapsed");
+}
+lucide.createIcons();
 /* LISTAR */
 async function loadDespesas() {
   const user = await getUser();
   if (!user) return;
 
-  const { data, error } = await supabase
+  const { data, error } = await window.supabaseClient
     .from("despesas")
     .select("*")
     .eq("user_id", user.id)
-    .order("data", { ascending: false });
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error(error);
@@ -80,12 +83,12 @@ async function saveDespesa() {
   let result;
 
   if (editingId) {
-    result = await supabase
+    result = await window.supabaseClient
       .from("despesas")
       .update(despesa)
       .eq("id", editingId);
   } else {
-    result = await supabase
+    result = await window.supabaseClient
       .from("despesas")
       .insert(despesa);
   }
@@ -114,7 +117,7 @@ function editDespesa(id, nome, valor, data) {
 async function deleteDespesa(id) {
   if (!confirm("Deseja excluir esta despesa?")) return;
 
-  const { error } = await supabase
+  const { error } = await window.supabaseClient
     .from("despesas")
     .delete()
     .eq("id", id);

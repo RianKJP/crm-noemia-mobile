@@ -13,7 +13,10 @@ async function getUser() {
 
   return data.user;
 }
-
+function toggleSidebar() {
+  document.querySelector(".sidebar").classList.toggle("collapsed");
+}
+lucide.createIcons();
 /* ===============================
    LISTAR PRODUTOS
 ================================ */
@@ -39,7 +42,7 @@ async function loadProducts() {
     table.innerHTML += `
       <tr>
         <td>${p.nome}</td>
-        <td>${p.categoria ?? "-"}</td>
+        <td>${p.ticket ?? "-"}</td>
         <td>R$ ${Number(p.preco).toFixed(2)}</td>
         <td>
           <span class="status ${p.status === "ativo" ? "success" : "pending"}">
@@ -50,7 +53,7 @@ async function loadProducts() {
           <button onclick="editProduct(
             '${p.id}',
             '${p.nome}',
-            '${p.categoria ?? ""}',
+            '${p.ticket ?? ""}',
             ${p.preco},
             '${p.status}'
           )">Editar</button>
@@ -69,7 +72,7 @@ function openModal() {
   editingId = null;
   document.getElementById("modalTitle").innerText = "Novo Produto";
   document.getElementById("nome").value = "";
-  document.getElementById("categoria").value = "";
+  document.getElementById("ticket").value = "";
   document.getElementById("preco").value = "";
   document.getElementById("status").value = "ativo";
   document.getElementById("modal").style.display = "flex";

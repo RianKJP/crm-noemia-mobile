@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Despesas</title>
+    <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/variable.css">
+  <link rel="stylesheet" href="../css/modal.css">
+  <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 
@@ -11,26 +15,64 @@
 
     <div class="app">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <h2 class="logo">CRM</h2>
-            <nav>
-                <a href="../dashboard.html">Visão Geral</a>
-                <a href="products.html">Produtos</a>
-                <a href="competitors.html">Concorrentes</a>
-                <a href="sales.html">Vendas</a>
-                <a href="expenses.html" class="active">Despesas</a>
-                <a href="utils.html">Util</a>
-            </nav>
-            <button class="logout" onclick="logout()">Sair</button>
-        </aside>
+       <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="title-crm">
+        <div class="title-icon">
+          <h2 class="logo">CRM Noémia</h2>
+          <button class="toggle-sidebar" onclick="toggleSidebar()">
+            <i data-lucide="menu"></i>
+          </button>
+        </div>
+        <hr>
+      </div>
+
+      <nav>
+        <a href="../dashboard.html">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Visão Geral</span>
+        </a>
+
+        <a href="pages/products.html">
+          <i data-lucide="package"></i>
+          <span>Produtos</span>
+        </a>
+
+        <a href="competitors.html">
+          <i data-lucide="users"></i>
+          <span>Concorrentes</span>
+        </a>
+
+        <a href="sales.html">
+          <i data-lucide="shopping-cart"></i>
+          <span>Vendas</span>
+        </a>
+
+        <a class="active" href="expenses.html">
+          <i data-lucide="wallet"></i>
+          <span>Despesas</span>
+        </a>
+
+        <a href="utils.html">
+          <i data-lucide="settings"></i>
+          <span>Util</span>
+        </a>
+      </nav>
+
+
+      <button class="logout">
+        <i data-lucide="log-out"></i>
+        <span>Sair</span>
+      </button>
+    </aside>
+
 
         <!-- CONTENT -->
         <main class="content">
 
             <header class="header">
                 <h1>Despesas</h1>
-                <button onclick="openModal()">Nova Despesa</button>
+                <button class="btn-primary" onclick="openModal()">Nova Despesa</button>
             </header>
 
             <section class="table-section">
@@ -50,22 +92,25 @@
         </main>
     </div>
 
-    <div id="modal" style="display:none">
-        <div>
-            <h3 id="modalTitle"></h3>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Nova Despesa</h3>
 
             <input id="name" placeholder="Nome da despesa">
             <input id="value" type="number" step="0.01" placeholder="Valor">
             <input id="date" type="date">
 
-            <button onclick="saveDespesa()">Salvar</button>
-            <button onclick="closeModal()">Cancelar</button>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="saveDespesa()">Salvar</button>
+                <button onclick="closeModal()">Cancelar</button>
+            </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/supabase.js"></script>
-    <script src="../js/products.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+    <script src="../js/expenses.js"></script>
+    <script src="../js/logout.js"></script>
 
 </body>
 
