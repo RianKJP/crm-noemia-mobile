@@ -1,126 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <title>Concorrentes</title>
-  <link rel="stylesheet" href="../css/reset.css">
-  <link rel="stylesheet" href="../css/variable.css">
-  <link rel="stylesheet" href="../css/modal.css">
-  <link rel="stylesheet" href="../css/sidebar.css">
-  <link rel="stylesheet" href="../css/dashboard.css">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            modalFade: {
+              from: { opacity: '0', transform: 'translateY(10px) scale(0.97)' },
+              to: { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+          },
+          animation: {
+            modalFade: 'modalFade 0.3s ease',
+          },
+        },
+      },
+    }
+  </script>
 </head>
 
-<body>
+<body class="bg-slate-100">
 
-  <div class="app">
+<div class="flex h-screen p-4 gap-4 bg-[#0D1322]">
 
- <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="title-crm">
-        <div class="title-icon">
-          <h2 class="logo">CRM Noémia</h2>
-          <button class="toggle-sidebar" onclick="toggleSidebar()">
-            <i data-lucide="menu"></i>
-          </button>
-        </div>
-        <hr>
+  <!-- SIDEBAR -->
+  <aside class="w-[260px] bg-[#0D1322] text-white rounded-2xl p-6 flex flex-col gap-4">
+
+    <!-- LOGO -->
+    <div class="flex flex-col gap-3 pl-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">CRM Noémia</h2>
+
+        <button
+          onclick="toggleSidebar()"
+          class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/15 border border-white/25 hover:bg-white/25 transition"
+        >
+          <i data-lucide="menu"></i>
+        </button>
       </div>
 
-      <nav>
-        <a href="../dashboard.html">
-          <i data-lucide="layout-dashboard"></i>
-          <span>Visão Geral</span>
-        </a>
-
-        <a href="products.html">
-          <i data-lucide="package"></i>
-          <span>Produtos</span>
-        </a>
-
-        <a class="active" href="competitors.html">
-          <i data-lucide="users"></i>
-          <span>Concorrentes</span>
-        </a>
-
-        <a href="sales.html">
-          <i data-lucide="shopping-cart"></i>
-          <span>Vendas</span>
-        </a>
-
-        <a href="expenses.html">
-          <i data-lucide="wallet"></i>
-          <span>Despesas</span>
-        </a>
-
-        <a href="utils.html">
-          <i data-lucide="settings"></i>
-          <span>Util</span>
-        </a>
-      </nav>
-
-
-      <button class="logout">
-        <i data-lucide="log-out"></i>
-        <span>Sair</span>
-      </button>
-    </aside>
-
-
-    <!-- CONTENT -->
-    <main class="content">
-
-      <header class="header">
-        <h1>Concorrentes</h1>
-        <button class="btn-primary" onclick="openModal()">Novo Concorrente</button>
-      </header>
-
-      <section class="table-section">
-        <table>
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Produto</th>
-              <th>Preço</th>
-              <th>Observações</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="competitorsTable"></tbody>
-        </table>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <h2 id="modalTitle">Novo Concorrente</h2>
-
-      <input id="nome" placeholder="Nome do concorrente">
-      <div class="field">
-        <label for="produto">produto</label>
-        <select id="produto">
-          <option value="alto">Ticket alto</option>
-          <option value="medio">Ticket médio</option>
-          <option value="baixo">Ticket baixo</option>
-        </select>
-      </div>
-      <input id="preco" type="number" step="0.01" placeholder="Preço">
-
-      <div class="modal-actions">
-        <button onclick="saveCompetitor()" class="btn-primary">Salvar</button>
-        <button onclick="closeModal()">Cancelar</button>
-      </div>
+      <hr class="h-px bg-white/25 border-0">
     </div>
+
+    <!-- NAV -->
+    <nav class="flex flex-col gap-1.5">
+
+      <a href="../dashboard.html"
+         class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+        <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+        <span>Visão Geral</span>
+      </a>
+
+      <a href="products.html"
+         class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+        <i data-lucide="package" class="w-5 h-5"></i>
+        <span>Produtos</span>
+      </a>
+
+      <a href="competitors.html"
+         class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#C5A46D] text-white shadow-[0_8px_20px_#C5A46D]">
+        <i data-lucide="users" class="w-5 h-5"></i>
+        <span>Concorrentes</span>
+      </a>
+
+      <a href="sales.html"
+         class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+        <span>Vendas</span>
+      </a>
+
+      <a href="expenses.html"
+         class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+        <i data-lucide="wallet" class="w-5 h-5"></i>
+        <span>Despesas</span>
+      </a>
+
+      <a href="utils.html"
+         class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+        <i data-lucide="settings" class="w-5 h-5"></i>
+        <span>Util</span>
+      </a>
+    </nav>
+
+    <!-- LOGOUT -->
+    <button
+      onclick="logout()"
+      class="mt-auto flex items-center gap-3 px-4 py-3 rounded-lg text-sm bg-white/15 border border-white/25 hover:bg-white/25 transition"
+    >
+      <i data-lucide="log-out" class="w-5 h-5"></i>
+      <span>Sair</span>
+    </button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 bg-slate-100 rounded-2xl p-8 overflow-y-auto">
+
+    <!-- HEADER -->
+    <header class="flex items-center justify-between mb-8">
+      <h1 class="text-[22px] font-medium text-slate-900">Concorrentes</h1>
+
+      <button
+        onclick="openModal()"
+        class="bg-blue-500 text-white px-5 py-2 rounded-full text-sm hover:bg-blue-600 transition"
+      >
+        Novo Concorrente
+      </button>
+    </header>
+
+    <!-- TABLE -->
+    <section class="bg-white rounded-xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+
+      <table class="w-full border-collapse">
+        <thead class="bg-blue-100">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs text-slate-500">Nome</th>
+            <th class="px-4 py-3 text-left text-xs text-slate-500">Produto</th>
+            <th class="px-4 py-3 text-left text-xs text-slate-500">Preço</th>
+            <th class="px-4 py-3 text-left text-xs text-slate-500">Observações</th>
+            <th class="px-4 py-3 text-left text-xs text-slate-500">Ações</th>
+          </tr>
+        </thead>
+
+        <tbody id="competitorsTable"></tbody>
+      </table>
+
+    </section>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/55 backdrop-blur z-[999]">
+
+  <div class="bg-white w-[420px] max-w-[92%] p-8 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] animate-modalFade">
+
+    <h2 id="modalTitle" class="mb-6 text-lg font-semibold text-slate-800">
+      Novo Concorrente
+    </h2>
+
+    <div class="flex flex-col gap-1.5 mb-4">
+      <label class="text-xs font-medium text-slate-700">Nome</label>
+      <input id="nome" class="input" />
+    </div>
+
+    <div class="flex flex-col gap-1.5 mb-4">
+      <label class="text-xs font-medium text-slate-700">Produto</label>
+      <input id="produto" class="input" />
+    </div>
+
+    <div class="flex flex-col gap-1.5 mb-4">
+      <label class="text-xs font-medium text-slate-700">Preço</label>
+      <input id="preco" type="number" class="input" />
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <label class="text-xs font-medium text-slate-700">Observações</label>
+      <textarea id="observacoes" class="input"></textarea>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-6">
+      <button onclick="closeModal()" class="px-6 py-3 rounded-full border text-sm hover:bg-slate-100">
+        Cancelar
+      </button>
+      <button onclick="saveCompetitor()" class="bg-blue-500 text-white px-6 py-3 rounded-full text-sm hover:bg-blue-600">
+        Salvar
+      </button>
+    </div>
+
   </div>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/supabase.js"></script>
-  <script src="../js/competitors.js"></script>
- <script src="../js/logout.js"></script>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase.js"></script>
+<script src="../js/competitors.js"></script>
+<script src="../js/logout.js"></script>
+
+<script>
+  lucide.createIcons()
+
+  function openModal() {
+    modal.classList.remove('hidden')
+    modal.classList.add('flex')
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden')
+    modal.classList.remove('flex')
+  }
+</script>
 
 </body>
-
 </html>

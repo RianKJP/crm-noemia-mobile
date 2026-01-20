@@ -4,129 +4,342 @@
 <head>
   <meta charset="UTF-8" />
   <title>CRM Dashboard</title>
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/variable.css">
-  <link rel="stylesheet" href="css/modal.css">
-  <link rel="stylesheet" href="css/sidebar.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind config (animação modal) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            modalFade: {
+              from: { opacity: '0', transform: 'translateY(10px) scale(0.97)' },
+              to: { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+          },
+          animation: {
+            modalFade: 'modalFade 0.3s ease',
+          },
+        },
+      },
+    }
+  </script>
 </head>
 
-<body>
+<body class="bg-slate-100">
 
-  <div class="app">
+  <div class="flex h-screen p-4 gap-4 bg-[#0D1322]">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-      <div class="title-crm">
-        <div class="title-icon">
-          <h2 class="logo">CRM Noémia</h2>
-          <button class="toggle-sidebar" onclick="toggleSidebar()">
+    <aside id="sidebar"
+      class="w-[260px] bg-[#0D1322] text-white rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300">
+
+      <!-- LOGO -->
+      <div class="flex flex-col gap-3 pl-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold leading-none">CRM Noémia</h2>
+
+          <button onclick="toggleSidebar()"
+            class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/15 border border-white/25 hover:bg-white/25 transition">
             <i data-lucide="menu"></i>
           </button>
         </div>
-        <hr>
+
+        <hr class="h-px bg-white/25 border-0">
       </div>
 
-      <nav>
-        <a class="active" href="../dashboard.html">
-          <i data-lucide="layout-dashboard"></i>
+      <!-- NAV -->
+      <nav class="flex flex-col gap-1.5">
+
+        <a href="dashboard.html"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#C5A46D] text-white shadow-[0_8px_20px_#C5A46D]">
+          <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
           <span>Visão Geral</span>
         </a>
 
-        <a href="pages/products.html">
-          <i data-lucide="package"></i>
+        <a href="pages/products.html"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+          <i data-lucide="package" class="w-5 h-5"></i>
           <span>Produtos</span>
         </a>
 
-        <a href="pages/competitors.html">
-          <i data-lucide="users"></i>
+        <a href="pages/competitors.html"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+          <i data-lucide="users" class="w-5 h-5"></i>
           <span>Concorrentes</span>
         </a>
 
-        <a href="pages/sales.html">
-          <i data-lucide="shopping-cart"></i>
+        <a href="pages/sales.html"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+          <i data-lucide="shopping-cart" class="w-5 h-5"></i>
           <span>Vendas</span>
         </a>
 
-        <a href="pages/expenses.html">
-          <i data-lucide="wallet"></i>
+        <a href="pages/expenses.html"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+          <i data-lucide="wallet" class="w-5 h-5"></i>
           <span>Despesas</span>
         </a>
 
-        <a href="pages/utils.html">
-          <i data-lucide="settings"></i>
+        <a href="pages/utils.html"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/85 hover:bg-white/15 transition">
+          <i data-lucide="settings" class="w-5 h-5"></i>
           <span>Util</span>
         </a>
       </nav>
 
-
-      <button class="logout" onclick="logout()">
-        <i data-lucide="log-out"></i>
+      <!-- LOGOUT -->
+      <button onclick="logout()"
+        class="mt-auto flex items-center gap-3 px-4 py-3 rounded-lg text-sm bg-white/15 border border-white/25 hover:bg-white/25 transition">
+        <i data-lucide="log-out" class="w-5 h-5"></i>
         <span>Sair</span>
       </button>
     </aside>
 
-    <!-- MAIN -->
-    <main class="content">
+    <main class="flex-1 bg-slate-100 rounded-2xl p-8 overflow-y-auto">
 
       <!-- HEADER -->
-      <header class="header">
-        <h1>Visão Geral</h1>
-        <span class="user">Olá, Usuário</span>
+      <header class="mb-10">
+        <h1 class="text-2xl font-semibold text-slate-900">Painel</h1>
+        <p class="text-sm text-slate-500">
+          Visão geral do desempenho do seu negócio
+        </p>
       </header>
 
       <!-- CARDS -->
-      <section class="cards">
-        <div class="card">
-          <h3>Faturamento</h3>
-          <p id="revenue">R$ 0,00</p>
+      <section class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6 mb-10">
+
+        <!-- CARD -->
+        <div class="relative bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+          <div
+            class="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-full bg-[#C5A46D]/15 text-[#C5A46D]">
+            <i data-lucide="dollar-sign" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-sm text-slate-500">Receita Total (30d)</h3>
+          <p id="revenue" class="mt-3 text-2xl font-semibold text-slate-900">
+            R$ 0,00
+          </p>
         </div>
 
-        <div class="card">
-          <h3>Despesas</h3>
-          <p id="expenses">R$ 0,00</p>
+        <div class="relative bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+          <div
+            class="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-full bg-blue-500/15 text-blue-500">
+            <i data-lucide="trending-up" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-sm text-slate-500">Lucro Líquido</h3>
+          <p id="profit" class="mt-3 text-2xl font-semibold text-slate-900">
+            R$ 0,00
+          </p>
         </div>
 
-        <div class="card">
-          <h3>Lucro</h3>
-          <p id="profit">R$ 0,00</p>
+        <div class="relative bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+          <div
+            class="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-full bg-red-500/15 text-red-500">
+            <i data-lucide="wallet" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-sm text-slate-500">Total de Despesas</h3>
+          <p id="expenses" class="mt-3 text-2xl font-semibold text-slate-900">
+            R$ 0,00
+          </p>
         </div>
 
-        <div class="card">
-          <h3>Produto + Vendido</h3>
-          <p id="top-product">---</p>
+        <div class="relative bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+          <div
+            class="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-full bg-indigo-500/15 text-indigo-500">
+            <i data-lucide="box" class="w-4 h-4"></i>
+          </div>
+          <h3 class="text-sm text-slate-500">Produto Mais Vendido</h3>
+          <p id="top-product" class="mt-3 text-2xl font-semibold text-slate-900">
+            N/A
+          </p>
         </div>
+
       </section>
 
-      <!-- TABELA -->
-      <section class="table-section">
-        <div class="table-header">
-          <h2>Últimas Vendas</h2>
-          <button class="btn-primary">Nova Venda</button>
+      <!-- CHART -->
+      <section class="bg-white rounded-2xl p-8 shadow-[0_10px_25px_rgba(15,23,42,0.06)] mb-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold text-slate-900">
+            Receita ao Longo do Tempo
+          </h2>
+          <div class="flex gap-2">
+            <button data-filter="day"
+              class="filter-btn bg-[#C5A46D] text-white px-4 py-1.5 rounded-full text-xs font-medium">
+              Dia
+            </button>
+
+            <button data-filter="month" class="filter-btn bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full text-xs">
+              Mês
+            </button>
+
+            <button data-filter="quarter"
+              class="filter-btn bg-slate-100 text-slate-600 px-4 py-1.5 rounded-full text-xs">
+              Trimestre
+            </button>
+          </div>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Produto</th>
-              <th>Qtd</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th>Data</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-            </tr>
-          </tbody>
-        </table>
+        <div class="relative h-[260px] w-full">
+          <canvas id="line-chart-widget"></canvas>
+        </div>
+      </section>
+      <!-- GRID DE CARDS -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+
+        <!-- CARD ESTATÍSTICAS RÁPIDAS -->
+        <div class="bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+          <h3 class="text-lg font-semibold text-slate-900 mb-5">
+            Estatísticas Rápidas
+          </h3>
+
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3">
+              <span class="text-sm text-slate-600">Vendas Concluídas</span>
+              <span id="statSales" class="text-sm font-semibold text-slate-900">0</span>
+            </div>
+
+            <div class="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3">
+              <span class="text-sm text-slate-600">Receita do Melhor Produto</span>
+              <span id="statBestRevenue" class="text-sm font-semibold text-slate-900">R$ 0,00</span>
+            </div>
+
+            <div class="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-3">
+              <span class="text-sm text-slate-600">Margem de Lucro</span>
+              <span id="statProfitMargin" class="text-sm font-semibold text-green-600">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD CAIXA -->
+        <div class="bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)] relative">
+
+          <!-- HEADER -->
+          <div class="flex items-start justify-between mb-4">
+
+            <h3 class="text-sm font-medium text-slate-500">
+              Caixa da empresa disponível
+            </h3>
+
+            <!-- MENU BUTTON + DROPDOWN -->
+            <div class="relative">
+              <button onclick="toggleCashMenu()"
+                class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+                <i data-lucide="more-horizontal" class="w-5 h-5 text-slate-500"></i>
+              </button>
+
+              <!-- MENU -->
+              <div id="cashMenu"
+                class="hidden absolute right-0 mt-2 w-32 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden z-20">
+                <button onclick="openCashModal()"
+                  class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition">
+                  Editar
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- TOTAL -->
+          <p id="cashTotal" class="text-2xl font-bold text-slate-900 mb-4">
+            R$ 0,00
+          </p>
+
+          <!-- DETALHES -->
+          <div class="flex flex-col gap-2 text-sm text-slate-600">
+            <div class="flex justify-between">
+              <span>Rian <span class="text-xs text-slate-400">(ADM)</span></span>
+              <span id="cashRian">R$ 0,00</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>Kaio <span class="text-xs text-slate-400">(Produtor)</span></span>
+              <span id="cashKaio">R$ 0,00</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MODAL CAIXA -->
+        <div id="cashModal" class="fixed inset-0 hidden items-center justify-center bg-black/55 backdrop-blur z-[999]">
+
+          <div
+            class="bg-white w-[400px] max-w-[92%] p-8 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.15)] animate-modalFade">
+
+            <h2 class="text-lg font-semibold text-slate-800 mb-6">
+              Editar Caixa da Empresa
+            </h2>
+
+            <div class="flex flex-col gap-4 mb-6">
+
+              <div class="flex flex-col gap-1.5">
+                <label class="text-xs font-medium text-slate-700">
+                  Rian (ADM)
+                </label>
+                <input id="inputRian" type="number" step="0.01"
+                  class="input border border-slate-300 rounded-lg px-4 py-2 text-sm">
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label class="text-xs font-medium text-slate-700">
+                  Kaio (Produtor)
+                </label>
+                <input id="inputKaio" type="number" step="0.01"
+                  class="input border border-slate-300 rounded-lg px-4 py-2 text-sm">
+              </div>
+
+            </div>
+
+            <div class="flex justify-end gap-3">
+              <button onclick="closeCashModal()"
+                class="px-5 py-2 rounded-full text-sm border border-slate-200 hover:bg-slate-100 transition">
+                Cancelar
+              </button>
+
+              <button onclick="saveCashValues()"
+                class="bg-[#C5A46D] text-white px-5 py-2 rounded-full text-sm hover:opacity-90 transition">
+                Salvar
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TERCEIRO CARD (exemplo / reserva) -->
+        <!-- TABLE -->
+        <div class="bg-white rounded-2xl p-6 shadow-[0_10px_25px_rgba(15,23,42,0.06)]">
+
+          <div class="flex items-center justify-between mb-5">
+            <h2 class="text-lg font-semibold text-slate-900">Últimas Vendas</h2>
+          </div>
+
+          <table class="w-full border-collapse">
+            <thead class="bg-slate-50">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500">Produto</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500">Total</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500">Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="sales-table"></tbody>
+          </table>
+
+        </div>
+
       </section>
 
     </main>
 
   </div>
+
+
+
+  <!-- SCRIPTS -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/supabase.js"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/logout.js"></script>

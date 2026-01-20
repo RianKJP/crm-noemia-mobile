@@ -39,30 +39,91 @@ async function loadProducts() {
   table.innerHTML = "";
 
   data.forEach(p => {
-    table.innerHTML += `
-      <tr>
-        <td>${p.nome}</td>
-        <td>${p.ticket ?? "-"}</td>
-        <td>R$ ${Number(p.preco).toFixed(2)}</td>
-        <td>
-          <span class="status ${p.status === "ativo" ? "success" : "pending"}">
-            ${p.status}
-          </span>
-        </td>
-        <td>
-          <button onclick="editProduct(
-            '${p.id}',
-            '${p.nome}',
-            '${p.ticket ?? ""}',
-            ${p.preco},
-            '${p.status}'
-          )">Editar</button>
+ table.innerHTML += `
+<tr class="hover:bg-slate-50 transition">
 
-          <button onclick="deleteProduct('${p.id}')">Excluir</button>
-        </td>
-      </tr>
-    `;
+  <!-- NOME -->
+  <td class="px-6 py-4 font-medium text-slate-900">
+    ${p.nome}
+  </td>
+
+  <!-- TICKET -->
+  <td class="px-6 py-4 text-center text-slate-700 capitalize">
+    ${p.ticket ?? "-"}
+  </td>
+
+  <!-- PREÇO -->
+  <td class="px-6 py-4 text-right text-slate-700">
+    R$ ${Number(p.preco).toFixed(2)}
+  </td>
+
+  <!-- CUSTO -->
+  <td class="px-6 py-4 text-right text-slate-700">
+    R$ ${Number(p.custo).toFixed(2)}
+  </td>
+
+  <!-- LINK -->
+  <td class="px-6 py-4 text-center">
+    ${
+      p.link
+        ? `<a href="${p.link}" target="_blank"
+             class="inline-flex items-center gap-1 text-blue-600 hover:underline text-sm">
+             <i data-lucide="link" class="w-4 h-4"></i> Abrir
+           </a>`
+        : "-"
+    }
+  </td>
+
+  <!-- STATUS -->
+  <td class="px-6 py-4 text-center">
+    <span class="
+      inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+      ${p.status === "ativo"
+        ? "bg-green-100 text-green-700"
+        : "bg-yellow-100 text-yellow-700"}
+    ">
+      ${p.status}
+    </span>
+  </td>
+
+  <!-- AÇÕES -->
+  <td class="px-6 py-4">
+    <div class="flex justify-end gap-2">
+
+      <button
+        onclick="editProduct(
+          '${p.id}',
+          '${p.nome}',
+          '${p.ticket ?? ""}',
+          ${p.preco},
+          ${p.custo},
+          '${p.link ?? ""}',
+          '${p.status}'
+        )"
+        class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 hover:bg-slate-100 transition"
+        title="Editar"
+      >
+        <i data-lucide="pencil" class="w-4 h-4"></i>
+      </button>
+
+      <button
+        onclick="deleteProduct('${p.id}')"
+        class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+        title="Excluir"
+      >
+        <i data-lucide="trash-2" class="w-4 h-4"></i>
+      </button>
+
+    </div>
+  </td>
+
+</tr>
+`;
+
+
   });
+  lucide.createIcons();
+
 }
 
 /* ===============================
@@ -81,6 +142,20 @@ function openModal() {
 function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
+function getCurrencyValue(id) {
+  const raw = document.getElementById(id).value;
+
+  if (!raw) return 0;
+
+  return Number(
+    raw
+      .replace('R$', '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim()
+  );
+}
+
 
 /* ===============================
    CREATE / UPDATE
@@ -89,11 +164,14 @@ async function saveProduct() {
   const user = await getUser();
   if (!user) return;
 
+  const valorConvertidoPreco = getCurrencyValue("preco");
+  const valorConvertidoCusto = getCurrencyValue("custo");
   const product = {
     nome: document.getElementById("nome").value,
-    categoria: document.getElementById("categoria").value || null,
-    preco: Number(document.getElementById("preco").value),
-    status: document.getElementById("status").value,
+    preco: valorConvertidoPreco,
+    custo: valorConvertidoCusto,
+    link: document.getElementById("link").value,
+    ticket: document.getElementById("ticket").value,
     user_id: user.id
   };
 
@@ -122,13 +200,15 @@ async function saveProduct() {
 /* ===============================
    EDITAR
 ================================ */
-function editProduct(id, nome, categoria, preco, status) {
+function editProduct(id, nome, ticket, preco,custo,link, status) {
   editingId = id;
 
   document.getElementById("modalTitle").innerText = "Editar Produto";
   document.getElementById("nome").value = nome;
-  document.getElementById("categoria").value = categoria;
+  document.getElementById("ticket").value = ticket;
   document.getElementById("preco").value = preco;
+  document.getElementById("custo").value = custo;
+  document.getElementById("link").value = link;
   document.getElementById("status").value = status;
 
   document.getElementById("modal").style.display = "flex";

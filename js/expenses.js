@@ -36,22 +36,51 @@ async function loadDespesas() {
 
   data.forEach(d => {
     table.innerHTML += `
-      <tr>
-        <td>${d.nome}</td>
-        <td>R$ ${Number(d.valor).toFixed(2)}</td>
-        <td>${new Date(d.data).toLocaleDateString("pt-BR")}</td>
-        <td>
-          <button onclick="editDespesa(
-            '${d.id}',
-            '${d.nome}',
-            ${d.valor},
-            '${d.data}'
-          )">Editar</button>
-          <button onclick="deleteDespesa('${d.id}')">Excluir</button>
+      <tr class="hover:bg-slate-50 transition">
+        <td class="px-6 py-4 text-slate-900 font-medium">
+          ${d.nome_despesa}
+        </td>
+
+        <td class="px-6 py-4 text-slate-700">
+          R$ ${Number(d.valor).toFixed(2)}
+        </td>
+
+        <td class="px-6 py-4 text-slate-700">
+          ${new Date(d.data_despesa).toLocaleDateString("pt-BR")}
+        </td>
+
+        <td class="px-6 py-4">
+          <div class="flex justify-end gap-2">
+
+            <!-- EDITAR -->
+            <button
+              onclick="editDespesa(
+                '${d.id}',
+                '${d.nome_despesa}',
+                ${d.valor},
+                '${d.data_despesa}'
+              )"
+              class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 hover:bg-slate-100 transition"
+              title="Editar"
+            >
+              <i data-lucide="pencil" class="w-4 h-4"></i>
+            </button>
+
+            <!-- EXCLUIR -->
+            <button
+              onclick="deleteDespesa('${d.id}')"
+              class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+              title="Excluir"
+            >
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+
+          </div>
         </td>
       </tr>
     `;
   });
+  lucide.createIcons();
 }
 
 /* MODAL */
@@ -67,16 +96,30 @@ function openModal() {
 function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
+function getCurrencyValue(id) {
+  const raw = document.getElementById(id).value;
+
+  if (!raw) return 0;
+
+  return Number(
+    raw
+      .replace('R$', '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim()
+  );
+}
 
 /* CREATE + UPDATE */
 async function saveDespesa() {
   const user = await getUser();
   if (!user) return;
-
+  
+  const valorConvertido = getCurrencyValue("value");
   const despesa = {
-    nome: document.getElementById("name").value,
-    valor: Number(document.getElementById("value").value),
-    data: document.getElementById("date").value,
+    nome_despesa: document.getElementById("name").value,
+    valor: valorConvertido,
+    data_despesa: document.getElementById("date").value,
     user_id: user.id
   };
 
